@@ -1,0 +1,79 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.clearfix::after {        /*ここはほぼ定型文*/
+  content: "";
+  display: block;
+  clear: both;
+}
+header {
+  height: 50px;
+  background-color: #ff9a4b;
+}
+main {
+  width: 960px;
+  margin: 50px auto;  /* martin: 上下　左右;  autoにしないと画像が横にずれる*/
+}
+.box {
+  float: left;
+  width: 300px;
+  margin-right:30px; /* margin: 30px  or : auto 30px　　だとだめ。親要素が960pxであり、左右　(30+30)*3=180  box=300*3+900  1080pxになるため
+  　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　画像が横に並ばない。かといって、leftにしても、一番左の画像が中央にならない。そのため、右にする。でも最後の写真の 30pxが余分なので
+  　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　last-childを使うハメになる。最後だけ margin: 30pxを使わない設定*/
+  position: relative;        /*親要素をrelativeにしないと、abusoriuteで左配置にできない。*/
+  padding: 10px;
+  background-color: #eee;
+}
+.box:last-child {       /*これをしないと、最後の画像まで右に30px余白をとってしまい、画像が下にいく。かといって、mainの横幅を広くさせると要件を満たさない。考えられている*/
+  margin-right: 0;
+}
+.box-img1 {
+  height: 150px;
+  background-image: url(img/flow01.png);
+  background-position: bottom;    /*画像配置はセンターでいいって思ったけど、実際レシポンスブル対応させたら、合わなかった。*/
+  background-size: cover;
+}
+.box-img2 {
+  height: 150px;
+  background-image: url(img/flow02.png);
+  background-position: bottom;
+  background-size: cover;
+}
+.box-img3 {
+  height: 150px;
+  background-image: url(img/flow03.png);
+  background-position: bottom;
+  background-size: cover;
+}
+.step {
+  position: absolute;       /* float: leftにすると画像の下に来る。画像配置　多分、親がそもそも浮いているから、先に書いてあるほうが優先させるため、親の下にいってしまうのではないだろうか。親をrelativeにしないと効果なし。*/
+  top: 0;          /*そのため、絶対的に使う必要がある。*/
+  left: 0;           /*修正していたときに、stepが左にぴったりにならなかったことがあった。デベロップツールで確認すると、invalid propety value とあり、どうやら全角が入っていた模様*/
+  background-color: #ff9a4b;
+  color: #fff;
+}
+.title {
+  margin: 15px 0 5px;
+}
+footer {
+  height: 50px;
+  background-color: #aaa;
+}
+
+/* タブレット縦置きサイズ（768px）以下の際に適用される設定 */
+@media screen and (max-width:768px) {
+  main {
+  width: 100%;
+  }
+  .box {
+  width: 90%;
+  float: none;          /*これを解除しないと、floatで画像が左にずれる*/
+  margin:20px auto 0;　　/*変更点だけ記述。これがないと、画像がくっつく。上　左右　下。　　これを解除しないと、floatで画像が左にずれる*/
+}
+.box:last-child {       /*これをしないと、最後の画像まで右に30px余白をとってしまい、画像が下にいく。かといって、mainの横幅を広くさせると要件を満たさない。考えられている*/
+  margin-right: auto;    /* これを解除しないと、最後の画像だけ、右にずれてしまう。noneにしたけれど、右にずれてしまった。*/
+}
+}
+
